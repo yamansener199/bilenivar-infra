@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create annotation for build error
-        run: pwd;ls 
+        run: ls 
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
