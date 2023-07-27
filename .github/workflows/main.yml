@@ -29,8 +29,12 @@ jobs:
 
       - name: CDK Deploy
         run: |
+          # Change the working directory to where your CDK app is located
           cd bilenivar_infra
-          cdk deploy BilenivarInfraStack
+          # Synthesize the CDK app to generate the CloudFormation template
+          cdk synth
+          # Deploy the CDK stack
+          cdk deploy BilenivarInfraStack --require-approval never
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
