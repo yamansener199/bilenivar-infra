@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Adjust to your desired Python version
+
       - name: Install AWS CLI
         run: |
           if [ ! -d "/usr/local/aws-cli/v2/current" ]; then
@@ -26,6 +31,16 @@ jobs:
         env:
           # If using Node.js 14 in GitHub Actions
           NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Install Python dependencies
+        run: |
+          cd bilenivar_infra
+          pip install -r requirements.txt
+        # Include additional environment variables if needed
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
 
       - name: CDK Deploy
         run: |
