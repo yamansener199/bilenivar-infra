@@ -1,10 +1,8 @@
 name: CDK Deployment
-
 on:
   push:
     branches:
       - main  # Adjust this to the appropriate branch name
-
 jobs:
   aws_cdk:
     runs-on: ubuntu-latest
