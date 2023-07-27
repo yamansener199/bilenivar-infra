@@ -46,7 +46,7 @@ jobs:
         run: |
           cd bilenivar_infra
           npx cdk synth --app "python3 ../app.py"
-          npx cdk deploy BilenivarInfraStack --require-approval never
+          npx cdk deploy --app "python3 ../app.py --require-approval never
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
