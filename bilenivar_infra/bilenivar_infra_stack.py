@@ -1,5 +1,6 @@
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_s3 as s3
+import aws_cdk.aws_ecr as ecr
 from aws_cdk import Stack, Tags
 from constructs import Construct
 
@@ -11,7 +12,7 @@ class BilenivarInfraStack(Stack):
         self.vpc_cidr = '192.168.0.0/16'
 
         self.__create_vpc()
-    
+        self.__create_ecr_backend()
     def __create_vpc(self):
         vpc_construct_id = 'vpc'
 
@@ -30,10 +31,24 @@ class BilenivarInfraStack(Stack):
                     name='Compute',
                     cidr_mask=20
                 ), ec2.SubnetConfiguration(
-                    subnet_type=ec2.SubnetType.PRIVATE_ISOLATED,
+                    subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS,
                     name='RDS',
                     cidr_mask=20
                 )
             ],
             nat_gateways=1
+        )
+    def __create_ecr_backend(self):
+        ecr_backend_name = 'BackendRepository'
+        self.ecr: ecr.Repository =ecr.Repository(
+            self,ecr_backend_name,
+            image_scan_on_push=True,
+            image_tag_mutability=ecr.TagMutability.IMMUTABLE
+        )
+    def __create_ecr_frontend(self):
+        ecr_frontend_name = 'FrontendRepository'
+        self.ecr: ecr.Repository =ecr.Repository(
+            self,ecr_frontend_name,
+            image_scan_on_push=True,
+            image_tag_mutability=ecr.TagMutability.IMMUTABLE
         )
