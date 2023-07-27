@@ -13,6 +13,7 @@ class BilenivarInfraStack(Stack):
 
         self.__create_vpc()
         self.__create_ecr_backend()
+        self.__create_ecr_frontend()
     def __create_vpc(self):
         vpc_construct_id = 'vpc'
 
